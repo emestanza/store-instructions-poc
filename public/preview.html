@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Preview - Store Instructions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #ffffff;
+      color: #333;
+      padding: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .preview-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .preview-header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .preview-header p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+    
+    .instruction-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    
+    .block {
+      margin-bottom: 1.5rem;
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .text-block {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #3498db;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+    
+    .image-block {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .image-block img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .image-caption {
+      padding: 0.75rem;
+      background: #f8f9fa;
+      font-size: 0.875rem;
+      color: #666;
+      text-align: center;
+    }
+    
+    .video-block {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: #000;
+    }
+    
+    .video-block video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .video-block .video-placeholder {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a1a1a;
+      color: white;
+      font-size: 3rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+    }
+    
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .continue-btn {
+      position: sticky;
+      bottom: 1rem;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      margin-top: 2rem;
+    }
+    
+    .continue-btn:active {
+      transform: scale(0.98);
+    }
+    
+    .block-number {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: #3498db;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-header">
+    <h1>Mobile Preview</h1>
+    <p id="preview-subtitle">Loading...</p>
+  </div>
+  
+  <div id="content"></div>
+  
+  <script>
+    async function loadPreview() {
+      const urlParams = new URLSearchParams(window.location.search)
+      const instructionId = urlParams.get('id')
+      
+      if (!instructionId) {
+        document.getElementById('content').innerHTML = '<div class="error">No instruction ID provided</div>'
+        return
+      }
+      
+      try {
+        const response = await fetch(`/api/instructions/${instructionId}`)
+        const data = await response.json()
+        
+        if (!data.success) {
+          document.getElementById('content').innerHTML = '<div class="error">Instruction not found</div>'
+          return
+        }
+        
+        const instruction = data.data
+        document.getElementById('preview-subtitle').textContent = 
+          `${instruction.store_name} (${instruction.store_external_id})`
+        
+        let html = `<h2 class="instruction-title">${instruction.title}</h2>`
+        
+        instruction.blocks.forEach((block, index) => {
+          html += `<div class="block">`
+          
+          switch (block.block_type) {
+            case 'text':
+              html += `
+                <div class="text-block">
+                  <span class="block-number">${index + 1}</span>
+                  ${block.text_content || ''}
+                </div>
+              `
+              break
+              
+            case 'image':
+              html += `
+                <div class="image-block">
+                  ${block.image_url ? `<img src="${block.image_url}" alt="${block.image_alt || ''}" />` : '<div style="padding: 2rem; text-align: center; background: #f0f0f0;">No image uploaded</div>'}
+                  ${block.image_caption ? `<div class="image-caption">${block.image_caption}</div>` : ''}
+                </div>
+              `
+              break
+              
+            case 'video':
+              html += `
+                <div class="video-block">
+                  ${block.video_url ? `
+                    <video controls ${block.video_thumbnail_url ? `poster="${block.video_thumbnail_url}"` : ''}>
+                      <source src="${block.video_url}" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                  ` : '<div class="video-placeholder">▶</div>'}
+                </div>
+              `
+              break
+          }
+          
+          html += `</div>`
+        })
+        
+        html += '<button class="continue-btn" onclick="window.close()">Continuar</button>'
+        
+        document.getElementById('content').innerHTML = html
+      } catch (error) {
+        console.error('Error loading preview:', error)
+        document.getElementById('content').innerHTML = '<div class="error">Error loading preview</div>'
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadPreview)
+  </script>
+</body>
+</html>

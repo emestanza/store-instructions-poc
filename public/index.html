@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Store Instructions CMS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #666;
+      transition: all 0.2s;
+    }
+    
+    .tab:hover {
+      color: #333;
+    }
+    
+    .tab.active {
+      color: #2c3e50;
+      border-bottom-color: #3498db;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: #3498db;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #2980b9;
+    }
+    
+    .btn-success {
+      background: #27ae60;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #229954;
+    }
+    
+    .btn-danger {
+      background: #e74c3c;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+    
+    .btn-secondary {
+      background: #95a5a6;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: #7f8c8d;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      text-align: left;
+      padding: 0.75rem;
+      background: #f8f9fa;
+      font-weight: 600;
+      border-bottom: 2px solid #ddd;
+    }
+    
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    
+    .modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+    }
+    
+    .close-btn:hover {
+      color: #333;
+    }
+    
+    .block {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #fafafa;
+    }
+    
+    .block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      color: #999;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Store Instructions CMS</h1>
+  </div>
+  
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="stores">Stores</button>
+      <button class="tab" data-tab="instructions">Instructions</button>
+    </div>
+    
+    <!-- Stores Tab -->
+    <div id="stores-tab" class="tab-content active">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Stores</h2>
+          <button class="btn btn-primary" onclick="openStoreModal()">Add Store</button>
+        </div>
+        <div id="stores-list"></div>
+      </div>
+    </div>
+    
+    <!-- Instructions Tab -->
+    <div id="instructions-tab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Instructions</h2>
+          <button class="btn btn-primary" onclick="openInstructionModal()">Create Instruction</button>
+        </div>
+        <div id="instructions-list"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Store Modal -->
+  <div id="store-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="store-modal-title">Add Store</h3>
+        <button class="close-btn" onclick="closeStoreModal()">&times;</button>
+      </div>
+      <form id="store-form" onsubmit="saveStore(event)">
+        <input type="hidden" id="store-id" />
+        
+        <div class="form-group">
+          <label for="external-id">Store ID (External)*</label>
+          <input type="text" id="external-id" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="store-name">Store Name*</label>
+          <input type="text" id="store-name" required />
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" />
+        </div>
+        
+        <div class="form-group">
+          <label for="brand-id">Brand ID</label>
+          <input type="number" id="brand-id" />
+        </div>
+        
+        <div class="form-group">
+          <label for="brand-name">Brand Name</label>
+          <input type="text" id="brand-name" />
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="store-active" checked /> Active
+          </label>
+        </div>
+        
+        <div class="actions">
+          <button type="submit" class="btn btn-success">Save</button>
+          <button type="button" class="btn btn-secondary" onclick="closeStoreModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Instruction Modal -->
+  <div id="instruction-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Instruction</h3>
+        <button class="close-btn" onclick="closeInstructionModal()">&times;</button>
+      </div>
+      <form id="instruction-form" onsubmit="saveInstruction(event)">
+        <div class="form-group">
+          <label for="instruction-store">Store*</label>
+          <select id="instruction-store" required></select>
+        </div>
+        
+        <div class="form-group">
+          <label for="instruction-title">Title*</label>
+          <input type="text" id="instruction-title" value="Instrucciones de llegada" required />
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="instruction-active" /> Published
+          </label>
+        </div>
+        
+        <div class="actions">
+          <button type="submit" class="btn btn-success">Create</button>
+          <button type="button" class="btn btn-secondary" onclick="closeInstructionModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script src="/admin.js"></script>
+</body>
+</html>
