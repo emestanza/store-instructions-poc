@@ -10,8 +10,8 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_PATH
-        value: /data/store-instructions.db
+        value: /opt/render/project/src/data/store-instructions.db
     disk:
       name: cms-data
-      mountPath: /data
+      mountPath: /opt/render/project/src/data
       sizeGB: 1
