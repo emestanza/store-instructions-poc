@@ -296,6 +296,30 @@
       display: flex;
       gap: var(--zu-space-2);
     }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: var(--zu-space-2);
+      margin-bottom: var(--zu-space-4);
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      accent-color: var(--zu-color-brand-primary);
+    }
+    
+    .checkbox-group label {
+      margin: 0;
+      font-weight: var(--zu-font-weight-semibold);
+      font-size: var(--zu-font-size-16);
+      color: var(--zu-color-neutral-700);
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -367,10 +391,9 @@
           <input type="text" id="brand-name" />
         </div>
         
-        <div class="form-group">
-          <label>
-            <input type="checkbox" id="store-active" checked /> Active
-          </label>
+        <div class="checkbox-group">
+          <input type="checkbox" id="store-active" checked />
+          <label for="store-active">Active</label>
         </div>
         
         <div class="actions">
@@ -399,10 +422,9 @@
           <input type="text" id="instruction-title" value="Instrucciones de llegada" required />
         </div>
         
-        <div class="form-group">
-          <label>
-            <input type="checkbox" id="instruction-active" /> Published
-          </label>
+        <div class="checkbox-group">
+          <input type="checkbox" id="instruction-active" />
+          <label for="instruction-active">Published</label>
         </div>
         
         <div class="actions">
