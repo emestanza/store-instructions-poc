@@ -97,10 +97,26 @@ router.put('/:id', async (req, res) => {
   try {
     const { title, active } = req.body
     
-    await run(
-      'UPDATE instructions SET title = ?, active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-      [title, active, req.params.id]
-    )
+    // Get current active status
+    const current = await get<{ active: number }>('SELECT active FROM instructions WHERE id = ?', [req.params.id])
+    
+    // Determine if we need to update published_at
+    let updateSQL = 'UPDATE instructions SET title = ?, active = ?, updated_at = CURRENT_TIMESTAMP'
+    const params: any[] = [title, active]
+    
+    // If changing from unpublished to published, set published_at
+    if (current && current.active === 0 && active === 1) {
+      updateSQL += ', published_at = CURRENT_TIMESTAMP'
+    }
+    // If unpublishing, clear published_at
+    else if (current && current.active === 1 && active === 0) {
+      updateSQL += ', published_at = NULL'
+    }
+    
+    updateSQL += ' WHERE id = ?'
+    params.push(req.params.id)
+    
+    await run(updateSQL, params)
     
     const updated = await get('SELECT * FROM instructions WHERE id = ?', [req.params.id])
     res.json({ success: true, data: updated })

@@ -185,8 +185,20 @@ function renderInstructions() {
   const container = document.getElementById('instructions-list')
   
   if (!instructions.length) {
-    container.innerHTML = '<p class="loading">No instructions yett. Click "Create Instruction" to add one.</p>'
+    container.innerHTML = '<p class="loading">No instructions yet. Click "Create Instruction" to add one.</p>'
     return
+  }
+  
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '-'
+    const date = new Date(dateStr)
+    return date.toLocaleString('en-US', { 
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
   }
   
   container.innerHTML = `
@@ -197,6 +209,7 @@ function renderInstructions() {
           <th>Store</th>
           <th>Version</th>
           <th>Status</th>
+          <th>Published</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -209,6 +222,11 @@ function renderInstructions() {
             <td>
               <span class="badge ${inst.active ? 'badge-success' : 'badge-danger'}">
                 ${inst.active ? 'Published' : 'Draft'}
+              </span>
+            </td>
+            <td>
+              <span style="font-size: 14px; color: var(--zu-color-neutral-600);">
+                ${formatDate(inst.published_at)}
               </span>
             </td>
             <td>
