@@ -38,12 +38,14 @@ Mobile API:
 - **Mobile preview button** - Opens phone-sized preview window showing exactly how zubaleros will see the content
 - Block editor with:
   - Add blocks (text/image/video)
-  - Reorder blocks with ↑↓ buttons
+  - **Drag-drop reordering** - Grab and drag blocks to reorder (HTML5 native drag API)
+  - Reorder blocks with ↑↓ buttons (alternative to drag-drop)
   - Delete blocks
   - Edit block content inline
   - File upload support
+  - Visual feedback during drag operations
 - Publish/unpublish toggle
-- Clean, professional UI design
+- Clean, professional UI design with Zubale design tokens
 
 **Files**:
 - `public/index.html` - Main dashboard (stores & instructions tabs)
@@ -166,8 +168,9 @@ Successfully integrated Zubale design tokens extracted from `@zubale/design-toke
 - Tabs: Blue underline for active state
 - Cards: Clean white on light gray background
 - Text blocks in preview: Blue left border accent
+- Drag-drop blocks: Visual feedback with dashed borders and hover states
 
-The admin UI now matches Zubale's visual identity across all pages.
+The admin UI now matches Zubale's visual identity across all pages with professional drag-drop UX.
 
 ## What's Next (Phase 2)
 

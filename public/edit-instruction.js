@@ -53,9 +53,19 @@ function renderBlocks() {
   }
   
   container.innerHTML = blocks.map((block, index) => `
-    <div class="block" id="block-${block.id}">
+    <div class="block" 
+         id="block-${block.id}" 
+         draggable="true" 
+         data-index="${index}"
+         ondragstart="handleDragStart(event)"
+         ondragover="handleDragOver(event)"
+         ondrop="handleDrop(event)"
+         ondragend="handleDragEnd(event)">
       <div class="block-header">
-        <span class="block-type">${block.block_type}</span>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+          <span class="block-type">${block.block_type}</span>
+        </div>
         <div class="actions">
           <button class="btn btn-primary" onclick="moveBlock(${index}, -1)" ${index === 0 ? 'disabled' : ''}>↑</button>
           <button class="btn btn-primary" onclick="moveBlock(${index}, 1)" ${index === blocks.length - 1 ? 'disabled' : ''}>↓</button>
@@ -66,6 +76,70 @@ function renderBlocks() {
       ${renderBlockContent(block)}
     </div>
   `).join('')
+}
+
+let draggedIndex = null
+
+function handleDragStart(event) {
+  draggedIndex = parseInt(event.target.getAttribute('data-index'))
+  event.target.style.opacity = '0.5'
+  event.dataTransfer.effectAllowed = 'move'
+}
+
+function handleDragOver(event) {
+  event.preventDefault()
+  event.dataTransfer.dropEffect = 'move'
+  
+  const target = event.target.closest('.block')
+  if (target && target !== event.currentTarget) {
+    target.classList.add('drag-over')
+  }
+  return false
+}
+
+function handleDrop(event) {
+  event.preventDefault()
+  
+  const target = event.target.closest('.block')
+  if (!target) return
+  
+  const dropIndex = parseInt(target.getAttribute('data-index'))
+  
+  if (draggedIndex !== null && draggedIndex !== dropIndex) {
+    const draggedBlock = blocks[draggedIndex]
+    blocks.splice(draggedIndex, 1)
+    blocks.splice(dropIndex, 0, draggedBlock)
+    
+    saveBlockOrder()
+  }
+  
+  target.classList.remove('drag-over')
+  return false
+}
+
+function handleDragEnd(event) {
+  event.target.style.opacity = '1'
+  document.querySelectorAll('.block').forEach(block => {
+    block.classList.remove('drag-over')
+  })
+  draggedIndex = null
+}
+
+async function saveBlockOrder() {
+  const blockIds = blocks.map(b => b.id)
+  
+  try {
+    await fetch(`/api/instructions/${instruction.id}/reorder`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ block_ids: blockIds }),
+    })
+    
+    await loadInstruction(instruction.id)
+  } catch (error) {
+    console.error('Error reordering blocks:', error)
+    alert('Error reordering blocks')
+  }
 }
 
 function renderBlockContent(block) {

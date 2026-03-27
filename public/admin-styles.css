@@ -107,6 +107,35 @@ body {
   padding: var(--zu-space-4);
   margin-bottom: var(--zu-space-4);
   background: var(--zu-color-neutral-200);
+  cursor: move;
+  transition: all 0.2s;
+}
+
+.block:hover {
+  box-shadow: 0 2px 8px rgba(0, 67, 252, 0.15);
+  border-color: var(--zu-color-brand-primary);
+}
+
+.block.dragging {
+  opacity: 0.5;
+}
+
+.block.drag-over {
+  border: 2px dashed var(--zu-color-brand-primary);
+  background: var(--zu-color-neutral-300);
+  transform: scale(1.02);
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: var(--zu-font-size-20);
+  color: var(--zu-color-neutral-500);
+  user-select: none;
+  line-height: 1;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
 }
 
 .block-header {
