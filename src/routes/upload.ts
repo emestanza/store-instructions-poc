@@ -10,12 +10,28 @@ const __dirname = dirname(__filename)
 
 const router = express.Router()
 
+// Determine uploads directory based on environment
+const getUploadsDir = () => {
+  // For production with persistent disk
+  if (process.env.NODE_ENV === 'production' && process.env.DATABASE_PATH) {
+    // If DATABASE_PATH is /data/store-instructions.db, use /data/uploads
+    const dataDir = dirname(process.env.DATABASE_PATH)
+    return path.join(dataDir, 'uploads')
+  }
+  
+  // For local development
+  return path.join(__dirname, '../../public/uploads')
+}
+
+const uploadsDir = getUploadsDir()
+
 // Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '../../public/uploads')
 if (!existsSync(uploadsDir)) {
   mkdirSync(uploadsDir, { recursive: true })
   console.log('Created uploads directory:', uploadsDir)
 }
+
+console.log('Uploads directory:', uploadsDir)
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

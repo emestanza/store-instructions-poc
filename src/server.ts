@@ -23,8 +23,23 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')))
+// Determine uploads directory based on environment
+const getUploadsDir = () => {
+  // For production with persistent disk
+  if (process.env.NODE_ENV === 'production' && process.env.DATABASE_PATH) {
+    // If DATABASE_PATH is /data/store-instructions.db, use /data/uploads
+    return path.join(path.dirname(process.env.DATABASE_PATH), 'uploads')
+  }
+  
+  // For local development
+  return path.join(__dirname, '../public/uploads')
+}
+
+const uploadsDir = getUploadsDir()
+console.log('Serving uploads from:', uploadsDir)
+
+// Serve uploaded files from persistent disk or local directory
+app.use('/uploads', express.static(uploadsDir))
 
 // Serve admin UI
 app.use(express.static(path.join(__dirname, '../public')))
