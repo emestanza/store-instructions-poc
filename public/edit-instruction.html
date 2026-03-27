@@ -24,13 +24,43 @@
           <p id="instruction-store-display"></p>
         </div>
         <div class="actions">
-          <button class="btn btn-primary" onclick="addBlock()">Add Block</button>
+          <button class="btn btn-primary" onclick="openBlockTypeModal()">Add Block</button>
           <button class="btn btn-secondary" onclick="previewInstruction()">Preview</button>
           <button class="btn" onclick="togglePublish()" id="publish-btn">Publish</button>
         </div>
       </div>
       
       <div id="blocks-container"></div>
+    </div>
+  </div>
+  
+  <!-- Block Type Selector Modal -->
+  <div id="block-type-modal" class="modal">
+    <div class="modal-content" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Choose Block Type</h3>
+        <button class="close-btn" onclick="closeBlockTypeModal()">&times;</button>
+      </div>
+      
+      <div class="block-type-grid">
+        <div class="block-type-card" onclick="selectBlockType('text')">
+          <div class="block-type-icon">📝</div>
+          <h4 class="block-type-title">Text</h4>
+          <p class="block-type-description">Add text content with rich formatting</p>
+        </div>
+        
+        <div class="block-type-card" onclick="selectBlockType('image')">
+          <div class="block-type-icon">🖼️</div>
+          <h4 class="block-type-title">Image</h4>
+          <p class="block-type-description">Upload and display images with captions</p>
+        </div>
+        
+        <div class="block-type-card" onclick="selectBlockType('video')">
+          <div class="block-type-icon">🎥</div>
+          <h4 class="block-type-title">Video</h4>
+          <p class="block-type-description">Add video content with thumbnails</p>
+        </div>
+      </div>
     </div>
   </div>
   

@@ -182,11 +182,30 @@ function renderBlockContent(block) {
 }
 
 async function addBlock() {
-  const blockType = prompt('Block type (text/image/video):', 'text')
-  if (!blockType || !['text', 'image', 'video'].includes(blockType)) {
-    alert('Invalid block type')
-    return
+  // This function is now deprecated - use openBlockTypeModal instead
+  openBlockTypeModal()
+}
+
+function openBlockTypeModal() {
+  const modal = document.getElementById('block-type-modal')
+  modal.classList.add('active')
+  
+  // Close modal on background click
+  modal.onclick = (e) => {
+    if (e.target === modal) {
+      closeBlockTypeModal()
+    }
   }
+}
+
+function closeBlockTypeModal() {
+  const modal = document.getElementById('block-type-modal')
+  modal.classList.remove('active')
+  modal.onclick = null
+}
+
+async function selectBlockType(blockType) {
+  closeBlockTypeModal()
   
   try {
     const response = await fetch(`/api/instructions/${instruction.id}/blocks`, {
