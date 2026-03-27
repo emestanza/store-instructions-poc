@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --exec 'npx tsx' src/server.ts",
     "build": "tsc && npm run copy-sql",
-    "copy-sql": "cp src/db/*.sql dist/db/",
+    "copy-sql": "cp src/db/*.sql dist/db/ && mkdir -p dist/db/migrations && cp src/db/migrations/*.sql dist/db/migrations/",
     "start": "node dist/server.js"
   },
   "keywords": [

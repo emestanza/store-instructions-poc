@@ -49,6 +49,43 @@ export const initDatabase = (): Promise<void> => {
         reject(err)
       } else {
         console.log('Database initialized successfully')
+        // Run migration after initialization
+        runMigration()
+          .then(() => resolve())
+          .catch((migErr) => {
+            console.warn('Migration warning:', migErr.message)
+            resolve() // Don't fail if migration has issues (column might already exist)
+          })
+      }
+    })
+  })
+}
+
+const runMigration = (): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    // Check if published_at column exists
+    db.all("PRAGMA table_info(instructions)", (err, columns: any[]) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      
+      const hasPublishedAt = columns.some(col => col.name === 'published_at')
+      
+      if (!hasPublishedAt) {
+        console.log('Running migration: adding published_at column')
+        const migrationSQL = readFileSync(join(__dirname, 'migrations/add_published_at.sql'), 'utf-8')
+        
+        db.exec(migrationSQL, (migErr) => {
+          if (migErr) {
+            reject(migErr)
+          } else {
+            console.log('✓ Migration completed: published_at column added')
+            resolve()
+          }
+        })
+      } else {
+        console.log('Migration skipped: published_at column already exists')
         resolve()
       }
     })
