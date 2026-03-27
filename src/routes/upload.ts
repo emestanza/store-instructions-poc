@@ -3,16 +3,24 @@ import multer from 'multer'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import { mkdirSync, existsSync } from 'fs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const router = express.Router()
 
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, '../../public/uploads')
+if (!existsSync(uploadsDir)) {
+  mkdirSync(uploadsDir, { recursive: true })
+  console.log('Created uploads directory:', uploadsDir)
+}
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../public/uploads'))
+    cb(null, uploadsDir)
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
