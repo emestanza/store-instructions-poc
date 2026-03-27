@@ -185,7 +185,7 @@ function renderInstructions() {
   const container = document.getElementById('instructions-list')
   
   if (!instructions.length) {
-    container.innerHTML = '<p class="loading">No instructions yet. Click "Create Instruction" to add one.</p>'
+    container.innerHTML = '<p class="loading">No instructions yett. Click "Create Instruction" to add one.</p>'
     return
   }
   
