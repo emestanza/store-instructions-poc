@@ -272,3 +272,19 @@ See `.env`:
 
 - Implementation Plan: `/var/www/STORE_INSTRUCTIONS_CMS_PLAN.md`
 - Mobile App: `/var/www/zubale-app`
+
+## 🚀 Deployment
+
+This CMS can be deployed to production. See deployment guides:
+
+- **Quick Start (Render.com)**: `QUICK_START_DEPLOY.md` - Deploy in 5 minutes (FREE)
+- **All Options**: `DEPLOYMENT_OPTIONS.md` - Compare Render, Railway, Fly.io, Glitch
+
+### Recommended: Render.com (Free Tier)
+
+1. Push to GitHub
+2. Connect to Render.com
+3. Deploy automatically
+4. Get public URL: `https://YOUR-APP.onrender.com`
+
+**Read `QUICK_START_DEPLOY.md` for step-by-step instructions.**

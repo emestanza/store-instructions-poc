@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: store-instructions-cms
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: cms-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1

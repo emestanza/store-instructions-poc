@@ -1,18 +1,41 @@
 import sqlite3 from 'sqlite3'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-import { readFileSync } from 'fs'
+import { readFileSync, mkdirSync, existsSync } from 'fs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const DB_PATH = join(__dirname, '../../database.sqlite')
+// Support for production environments with persistent disk
+const getDbPath = () => {
+  if (process.env.DATABASE_PATH) {
+    return process.env.DATABASE_PATH
+  }
+  
+  // For Render.com persistent disk
+  if (process.env.RENDER && process.env.RENDER_DISK_PATH) {
+    return join(process.env.RENDER_DISK_PATH, 'store-instructions.db')
+  }
+  
+  // Default local path
+  return join(__dirname, '../../database.sqlite')
+}
+
+const DB_PATH = getDbPath()
+
+// Ensure directory exists
+const dbDir = dirname(DB_PATH)
+if (!existsSync(dbDir)) {
+  mkdirSync(dbDir, { recursive: true })
+}
+
+console.log('Database path:', DB_PATH)
 
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
     console.error('Error opening database:', err)
   } else {
-    console.log('Connected to SQLite database')
+    console.log('Connected to SQLite database at:', DB_PATH)
   }
 })
 
