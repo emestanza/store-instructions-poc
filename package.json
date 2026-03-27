@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec 'npx tsx' src/server.ts",
-    "build": "tsc",
+    "build": "tsc && npm run copy-sql",
+    "copy-sql": "cp src/db/*.sql dist/db/",
     "start": "node dist/server.js"
   },
   "keywords": [
