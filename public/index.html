@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Store Instructions CMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/tokens.css">
   <style>
     * {
       margin: 0;
@@ -12,54 +16,57 @@
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: #f5f5f5;
-      color: #333;
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--zu-color-neutral-200);
+      color: var(--zu-color-neutral-700);
+      font-weight: var(--zu-font-weight-regular);
     }
     
     .header {
-      background: #2c3e50;
-      color: white;
-      padding: 1rem 2rem;
+      background: var(--zu-color-brand-accent);
+      color: var(--zu-color-neutral-100);
+      padding: var(--zu-space-4) var(--zu-space-8);
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .header h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-size: var(--zu-font-size-24);
+      font-weight: var(--zu-font-weight-bold);
     }
     
     .container {
       max-width: 1400px;
-      margin: 2rem auto;
-      padding: 0 2rem;
+      margin: var(--zu-space-8) auto;
+      padding: 0 var(--zu-space-8);
     }
     
     .tabs {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #ddd;
+      gap: var(--zu-space-4);
+      margin-bottom: var(--zu-space-8);
+      border-bottom: 2px solid var(--zu-color-neutral-400);
     }
     
     .tab {
-      padding: 0.75rem 1.5rem;
+      padding: var(--zu-space-3) var(--zu-space-6);
       background: none;
       border: none;
       border-bottom: 3px solid transparent;
       cursor: pointer;
-      font-size: 1rem;
-      color: #666;
+      font-size: var(--zu-font-size-16);
+      font-weight: var(--zu-font-weight-semibold);
+      color: var(--zu-color-neutral-500);
       transition: all 0.2s;
+      font-family: 'Lexend', sans-serif;
     }
     
     .tab:hover {
-      color: #333;
+      color: var(--zu-color-neutral-700);
     }
     
     .tab.active {
-      color: #2c3e50;
-      border-bottom-color: #3498db;
+      color: var(--zu-color-brand-accent);
+      border-bottom-color: var(--zu-color-brand-primary);
     }
     
     .tab-content {
@@ -71,69 +78,71 @@
     }
     
     .card {
-      background: white;
+      background: var(--zu-color-neutral-100);
       border-radius: 8px;
-      padding: 1.5rem;
+      padding: var(--zu-space-6);
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--zu-space-6);
     }
     
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--zu-space-6);
     }
     
     .card-title {
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: var(--zu-font-size-20);
+      font-weight: var(--zu-font-weight-bold);
+      color: var(--zu-color-neutral-700);
     }
     
     .btn {
-      padding: 0.5rem 1rem;
+      padding: var(--zu-space-2) var(--zu-space-4);
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 0.875rem;
-      font-weight: 500;
+      font-size: var(--zu-font-size-14);
+      font-weight: var(--zu-font-weight-semibold);
+      font-family: 'Lexend', sans-serif;
       transition: all 0.2s;
     }
     
     .btn-primary {
-      background: #3498db;
-      color: white;
+      background: var(--zu-color-brand-primary);
+      color: var(--zu-color-neutral-100);
     }
     
     .btn-primary:hover {
-      background: #2980b9;
+      background: var(--zu-color-informative-700);
     }
     
     .btn-success {
-      background: #27ae60;
-      color: white;
+      background: var(--zu-color-positive-500);
+      color: var(--zu-color-neutral-100);
     }
     
     .btn-success:hover {
-      background: #229954;
+      background: var(--zu-color-positive-700);
     }
     
     .btn-danger {
-      background: #e74c3c;
-      color: white;
+      background: var(--zu-color-negative-500);
+      color: var(--zu-color-neutral-100);
     }
     
     .btn-danger:hover {
-      background: #c0392b;
+      background: var(--zu-color-negative-700);
     }
     
     .btn-secondary {
-      background: #95a5a6;
-      color: white;
+      background: var(--zu-color-neutral-500);
+      color: var(--zu-color-neutral-100);
     }
     
     .btn-secondary:hover {
-      background: #7f8c8d;
+      background: var(--zu-color-neutral-600);
     }
     
     table {
@@ -143,53 +152,65 @@
     
     th {
       text-align: left;
-      padding: 0.75rem;
-      background: #f8f9fa;
-      font-weight: 600;
-      border-bottom: 2px solid #ddd;
+      padding: var(--zu-space-3);
+      background: var(--zu-color-neutral-200);
+      font-weight: var(--zu-font-weight-semibold);
+      font-size: var(--zu-font-size-14);
+      color: var(--zu-color-neutral-600);
+      border-bottom: 2px solid var(--zu-color-neutral-400);
     }
     
     td {
-      padding: 0.75rem;
-      border-bottom: 1px solid #eee;
+      padding: var(--zu-space-3);
+      border-bottom: 1px solid var(--zu-color-neutral-300);
+      font-size: var(--zu-font-size-14);
     }
     
     .badge {
       display: inline-block;
-      padding: 0.25rem 0.5rem;
+      padding: var(--zu-space-1) var(--zu-space-2);
       border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      font-size: var(--zu-font-size-12);
+      font-weight: var(--zu-font-weight-semibold);
     }
     
     .badge-success {
-      background: #d4edda;
-      color: #155724;
+      background: var(--zu-color-positive-300);
+      color: var(--zu-color-positive-700);
     }
     
     .badge-danger {
-      background: #f8d7da;
-      color: #721c24;
+      background: var(--zu-color-negative-300);
+      color: var(--zu-color-negative-700);
     }
     
     .form-group {
-      margin-bottom: 1rem;
+      margin-bottom: var(--zu-space-4);
     }
     
     label {
       display: block;
-      margin-bottom: 0.25rem;
-      font-weight: 500;
-      color: #555;
+      margin-bottom: var(--zu-space-1);
+      font-weight: var(--zu-font-weight-semibold);
+      font-size: var(--zu-font-size-14);
+      color: var(--zu-color-neutral-600);
     }
     
     input, select, textarea {
       width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-family: inherit;
+      padding: var(--zu-space-2);
+      border: 1px solid var(--zu-color-neutral-400);
+      border-radius: 6px;
+      font-size: var(--zu-font-size-16);
+      font-family: 'Lexend', sans-serif;
+      font-weight: var(--zu-font-weight-light);
+      color: var(--zu-color-neutral-700);
+      transition: border-color 0.2s;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--zu-color-brand-primary);
     }
     
     textarea {
@@ -204,7 +225,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(2, 1, 93, 0.5);
       z-index: 1000;
     }
     
@@ -215,9 +236,9 @@
     }
     
     .modal-content {
-      background: white;
+      background: var(--zu-color-neutral-100);
       border-radius: 8px;
-      padding: 2rem;
+      padding: var(--zu-space-8);
       max-width: 600px;
       width: 90%;
       max-height: 90vh;
@@ -228,50 +249,52 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--zu-space-6);
     }
     
     .modal-title {
-      font-size: 1.5rem;
-      font-weight: 600;
+      font-size: var(--zu-font-size-24);
+      font-weight: var(--zu-font-weight-bold);
+      color: var(--zu-color-neutral-700);
     }
     
     .close-btn {
       background: none;
       border: none;
-      font-size: 1.5rem;
+      font-size: var(--zu-font-size-24);
       cursor: pointer;
-      color: #999;
+      color: var(--zu-color-neutral-500);
     }
     
     .close-btn:hover {
-      color: #333;
+      color: var(--zu-color-neutral-700);
     }
     
     .block {
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      background: #fafafa;
+      border: 1px solid var(--zu-color-neutral-400);
+      border-radius: 6px;
+      padding: var(--zu-space-4);
+      margin-bottom: var(--zu-space-4);
+      background: var(--zu-color-neutral-200);
     }
     
     .block-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: var(--zu-space-2);
     }
     
     .loading {
       text-align: center;
-      padding: 2rem;
-      color: #999;
+      padding: var(--zu-space-8);
+      color: var(--zu-color-neutral-500);
+      font-weight: var(--zu-font-weight-light);
     }
     
     .actions {
       display: flex;
-      gap: 0.5rem;
+      gap: var(--zu-space-2);
     }
   </style>
 </head>

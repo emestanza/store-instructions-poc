@@ -137,10 +137,42 @@ Database: SQLite at `/var/www/store-instructions-cms/database.sqlite`
 └── README.md                        # Comprehensive docs
 ```
 
+## Design Tokens Integration ✅
+
+**Status**: Complete
+
+Successfully integrated Zubale design tokens extracted from `@zubale/design-tokens` v3.5.0:
+
+**Applied Design System**:
+- **Colors**: Using official Zubale palette
+  - Brand primary: `#0043FC` (Zubale blue)
+  - Brand accent: `#02015D` (Zubale dark navy)
+  - Neutral grays, positive/negative/warning semantic colors
+- **Typography**: Lexend font family (imported from Google Fonts)
+  - Font weights: light (300), regular (400), semibold (600), bold (700)
+  - Font sizes: 10-60px scale matching mobile app
+- **Spacing**: Consistent spacing scale (0.25rem - 6rem)
+
+**Files Updated**:
+- `public/tokens.css` - CSS variables for all design tokens
+- `public/index.html` - Main dashboard with Zubale styling
+- `public/edit-instruction.html` - Editor with Zubale styling
+- `public/preview.html` - Mobile preview with Zubale styling
+- `public/admin-styles.css` - Shared styles using design tokens
+
+**Visual Changes**:
+- Header: Zubale dark navy (`#02015D`) background
+- Primary buttons: Zubale blue (`#0043FC`)
+- Tabs: Blue underline for active state
+- Cards: Clean white on light gray background
+- Text blocks in preview: Blue left border accent
+
+The admin UI now matches Zubale's visual identity across all pages.
+
 ## What's Next (Phase 2)
 
 Phase 2 will focus on:
-1. Integrating Zubale design tokens (@zubale/design-tokens) into admin UI
+1. ~~Integrating Zubale design tokens (@zubale/design-tokens) into admin UI~~ ✅ **COMPLETE**
 2. Improving block editor UX (image/video previews, better file handling)
 3. Adding more robust validation and error handling
 4. Testing all CRUD operations thoroughly

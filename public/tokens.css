@@ -1,0 +1,75 @@
+/* Zubale Design Tokens - CSS Variables */
+:root {
+  /* Brand Colors */
+  --zu-color-brand-primary: #0043FC;
+  --zu-color-brand-accent: #02015D;
+  
+  /* Neutral Colors */
+  --zu-color-neutral-700: #02015D;
+  --zu-color-neutral-600: #1B316A;
+  --zu-color-neutral-500: #6675A3;
+  --zu-color-neutral-400: #C2C8DA;
+  --zu-color-neutral-300: #DFE6F6;
+  --zu-color-neutral-200: #F2F5FA;
+  --zu-color-neutral-100: #FFFFFF;
+  
+  /* Positive/Success Colors */
+  --zu-color-positive-700: #00705F;
+  --zu-color-positive-500: #008C78;
+  --zu-color-positive-300: #D0F7F2;
+  
+  /* Warning Colors */
+  --zu-color-warning-700: #D96D02;
+  --zu-color-warning-500: #F38401;
+  --zu-color-warning-300: #FFE2C5;
+  
+  /* Informative Colors */
+  --zu-color-informative-700: #2750A1;
+  --zu-color-informative-500: #3A6CCF;
+  --zu-color-informative-300: #D1E2FA;
+  
+  /* Negative/Error Colors */
+  --zu-color-negative-700: #B0203C;
+  --zu-color-negative-500: #E82C50;
+  --zu-color-negative-300: #FFD3DC;
+  
+  /* Complementary Colors */
+  --zu-color-complementary-1: #BA22EC;
+  --zu-color-complementary-2: #69F0A2;
+  --zu-color-complementary-3: #FAE34B;
+  --zu-color-complementary-4: #EB2F90;
+  
+  /* Font Sizes */
+  --zu-font-size-60: 3.75rem;
+  --zu-font-size-48: 3rem;
+  --zu-font-size-32: 2rem;
+  --zu-font-size-28: 1.75rem;
+  --zu-font-size-24: 1.5rem;
+  --zu-font-size-20: 1.25rem;
+  --zu-font-size-18: 1.125rem;
+  --zu-font-size-16: 1rem;
+  --zu-font-size-14: 0.875rem;
+  --zu-font-size-12: 0.75rem;
+  --zu-font-size-10: 0.625rem;
+  
+  /* Font Weights */
+  --zu-font-weight-light: 300;
+  --zu-font-weight-regular: 400;
+  --zu-font-weight-semibold: 600;
+  --zu-font-weight-bold: 700;
+  
+  /* Spacing */
+  --zu-space-1: 0.25rem;
+  --zu-space-2: 0.5rem;
+  --zu-space-3: 0.75rem;
+  --zu-space-4: 1rem;
+  --zu-space-5: 1.25rem;
+  --zu-space-6: 1.5rem;
+  --zu-space-7: 1.75rem;
+  --zu-space-8: 2rem;
+  --zu-space-9: 2.5rem;
+  --zu-space-10: 3.5rem;
+  --zu-space-11: 4.5rem;
+  --zu-space-12: 5rem;
+  --zu-space-13: 6rem;
+}
